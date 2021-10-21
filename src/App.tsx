@@ -18,6 +18,7 @@ export interface IFilm {
   created: string;
   edited: string;
   url: string;
+  liked?: boolean | undefined;
 }
 
 const App = () =>{
@@ -25,9 +26,7 @@ const App = () =>{
   const [filmsData, setFilmsData] = useState<Array<IFilm> | []>([]);
   const [chosenFilm, setChosenFilm] = useState<IFilm | null>(null);
   const [filmsArr, setFilmsArr] = useState<Array<IFilm>>([]);
-  //index = episode_id
-  //element = the movie details obj
-  // let filmsArr: Array<IFilm> = [];
+  const [isClick, setClick] = useState<boolean | undefined>(false);
   
 
 //INITIALIZE THE filmsArr WITH {index = episode_id ,element = the movie details obj}
@@ -44,38 +43,47 @@ const App = () =>{
     fetch('https://swapi.dev/api/films')
     .then(res => res.json())
     .then(res =>  setFilmsData(res.results))
-    .then(() => initFilmsArr(filmsData))
+    
   },[])
 
+  useEffect(() => {
+    initFilmsArr(filmsData);
+  }, [filmsData])
 
   useEffect(() => {
       // console.log(chosenFilm);
-      // console.log(filmsArr);
+      console.log(filmsArr);
       
   },[chosenFilm])
 
   const handleClick = (event: React.SyntheticEvent<HTMLInputElement>, id: number): void => {
-
     // console.log(event.target.value);
-    // console.log(filmsHT.get(event.target.value));
-    // console.log(id);
-    
+    console.log(id);
     console.log(filmsArr);
-    
-    
-    
-
-    setChosenFilm(filmsArr[id]);
-    
+    setChosenFilm(filmsArr[id]); 
+    // setClick(filmsArr[id].liked)
   }
   
+  const handleLike = (id: number | undefined, isclick: boolean | undefined) : void => {
+    setClick(isclick);
+    console.log("masho");
+    
+    if(id){
+      
+      filmsArr[id].liked = isclick;
+      setChosenFilm(filmsArr[id]); 
+      
+    }
+    
+  }
+
 
 
   return ( !filmsData.length ?
             <h1>Loading</h1> :
             <>
             <TOC filmsData={filmsData} handleClick={handleClick} />
-            <ChosenFilmDetails filmsArr={filmsArr} chosenFilm={chosenFilm} />
+            <ChosenFilmDetails filmsArr={filmsArr} chosenFilm={chosenFilm} handleLike={handleLike} />
             </>
   );
 }

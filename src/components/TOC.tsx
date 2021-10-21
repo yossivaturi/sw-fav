@@ -15,7 +15,7 @@ const TOC = (props: AppProps) => {
   
     return (
         <>
-        {console.log(props.filmsData)}
+        
         
         <div className="toc">
             
