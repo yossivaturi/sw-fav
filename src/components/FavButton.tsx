@@ -5,6 +5,7 @@ interface AppProps {
    epid: number | undefined;
    isClick: boolean | undefined;
    handleLike: (id: number | undefined, isclick: boolean | undefined) => void;
+   liked: boolean
   
   }
 
@@ -25,7 +26,7 @@ const FavButton  = (props: AppProps) => {
   return (
     <div>
       <Heart 
-      isClick={isClick} 
+      isClick={props.liked} 
       onClick={() => {
         setClick(!isClick);
         // props.handleLike(props.epid, props.isClick);

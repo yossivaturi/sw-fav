@@ -26,7 +26,7 @@ const App = () =>{
   const [filmsData, setFilmsData] = useState<Array<IFilm> | []>([]);
   const [chosenFilm, setChosenFilm] = useState<IFilm | null>(null);
   const [filmsArr, setFilmsArr] = useState<Array<IFilm>>([]);
-  const [isClick, setClick] = useState<boolean | undefined>(false);
+  // const [isClick, setClick] = useState<boolean | undefined>(false);
   
 
 //INITIALIZE THE filmsArr WITH {index = episode_id ,element = the movie details obj}
@@ -65,7 +65,7 @@ const App = () =>{
   }
   
   const handleLike = (id: number | undefined, isclick: boolean | undefined) : void => {
-    setClick(isclick);
+    // setClick(isclick);
     console.log("masho");
     
     if(id){
@@ -83,7 +83,12 @@ const App = () =>{
             <h1>Loading</h1> :
             <>
             <TOC filmsData={filmsData} handleClick={handleClick} />
-            <ChosenFilmDetails filmsArr={filmsArr} chosenFilm={chosenFilm} handleLike={handleLike} />
+            <ChosenFilmDetails 
+            filmsArr={filmsArr} 
+            chosenFilm={chosenFilm} 
+            handleLike={handleLike}
+            liked={localStorage.getItem(`${chosenFilm?.episode_id}`) === 'true' ? true : false}
+            />
             </>
   );
 }

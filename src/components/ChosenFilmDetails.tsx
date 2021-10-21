@@ -7,6 +7,7 @@ interface AppProps {
     chosenFilm: IFilm | null
     filmsArr: Array<IFilm>
     handleLike: (id: number | undefined, isclick: boolean | undefined) => void;
+    liked: boolean
   }
 
 const ChosenFilmDetails = (props: AppProps) => {
@@ -23,6 +24,7 @@ const ChosenFilmDetails = (props: AppProps) => {
                     epid={props.chosenFilm?.episode_id} 
                     isClick={props.chosenFilm?.liked} 
                     handleLike={props.handleLike} 
+                    liked={props.liked}
                 />
             </div>
         </div>
