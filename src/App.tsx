@@ -58,7 +58,7 @@ const App = () =>{
 
     // console.log(event.target.value);
     // console.log(filmsHT.get(event.target.value));
-    console.log(id);
+    // console.log(id);
     
     console.log(filmsArr);
     
