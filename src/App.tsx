@@ -3,7 +3,6 @@ import './App.css';
 import TOC from './components/TOC';
 import ChosenFilmDetails from './components/ChosenFilmDetails';
 
-
 export interface IFilm {
   title: string;
   episode_id: number;
@@ -26,7 +25,7 @@ const App = () =>{
   const [filmsData, setFilmsData] = useState<Array<IFilm> | []>([]);
   const [chosenFilm, setChosenFilm] = useState<IFilm | null>(null);
   const [filmsArr, setFilmsArr] = useState<Array<IFilm>>([]);
-  // const [isClick, setClick] = useState<boolean | undefined>(false);
+  const [isLiked, setLiked] = useState(false);
   
 
 //INITIALIZE THE filmsArr WITH {index = episode_id ,element = the movie details obj}
@@ -36,58 +35,43 @@ const App = () =>{
       filmsArrTemp[films[i].episode_id] = films[i];
     }
     setFilmsArr(filmsArrTemp);
-    
   }
 
   useEffect(() => {
     fetch('https://swapi.dev/api/films')
     .then(res => res.json())
-    .then(res =>  setFilmsData(res.results))
-    
+    .then(res =>  setFilmsData(res.results)) 
   },[])
 
   useEffect(() => {
     initFilmsArr(filmsData);
   }, [filmsData])
 
-  useEffect(() => {
-      // console.log(chosenFilm);
-      console.log(filmsArr);
+  // useEffect(() => {
       
-  },[chosenFilm])
+  // },[chosenFilm])
 
   const handleClick = (event: React.SyntheticEvent<HTMLInputElement>, id: number): void => {
-    // console.log(event.target.value);
-    console.log(id);
-    console.log(filmsArr);
-    setChosenFilm(filmsArr[id]); 
-    // setClick(filmsArr[id].liked)
-  }
-  
-  const handleLike = (id: number | undefined, isclick: boolean | undefined) : void => {
-    // setClick(isclick);
-    console.log("masho");
-    
-    if(id){
-      
-      filmsArr[id].liked = isclick;
-      setChosenFilm(filmsArr[id]); 
-      
-    }
-    
+    setChosenFilm(filmsArr[id]);
+    const liked = localStorage.getItem(`${id}`) === 'true';
+    setLiked(liked);
   }
 
-
+  const handleLike = () => {
+    const liked = !isLiked;
+    setLiked(liked);
+    localStorage.setItem(`${chosenFilm?.episode_id}`, `${liked}`);
+}
 
   return ( !filmsData.length ?
             <h1>Loading</h1> :
             <>
             <TOC filmsData={filmsData} handleClick={handleClick} />
             <ChosenFilmDetails 
-            filmsArr={filmsArr} 
-            chosenFilm={chosenFilm} 
-            handleLike={handleLike}
-            liked={localStorage.getItem(`${chosenFilm?.episode_id}`) === 'true' ? true : false}
+              filmsArr={filmsArr} 
+              chosenFilm={chosenFilm}
+              isLiked={isLiked}
+              handleLike={handleLike}
             />
             </>
   );

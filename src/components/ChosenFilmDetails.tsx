@@ -2,17 +2,18 @@ import React,{useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import './ChosenFilmDetails.css';
 import { IFilm } from '../App';
-import FavButton from './FavButton'
+// @ts-ignore
+import Heart from "react-animated-heart"
+
 interface AppProps {
     chosenFilm: IFilm | null
     filmsArr: Array<IFilm>
-    handleLike: (id: number | undefined, isclick: boolean | undefined) => void;
-    liked: boolean
+    isLiked: Boolean
+    handleLike: () => void
   }
 
 const ChosenFilmDetails = (props: AppProps) => {
-
-
+    const [liked, setLiked] = useState(props.isLiked);
 
     return (
         <>
@@ -20,12 +21,9 @@ const ChosenFilmDetails = (props: AppProps) => {
             <h1>{props.chosenFilm?.title}</h1>
             <p>{props.chosenFilm?.opening_crawl}</p>
             <div>
-                <FavButton 
-                    epid={props.chosenFilm?.episode_id} 
-                    isClick={props.chosenFilm?.liked} 
-                    handleLike={props.handleLike} 
-                    liked={props.liked}
-                />
+                <Heart
+                    isClick={props.isLiked} 
+                    onClick={props.handleLike}/>
             </div>
         </div>
 
