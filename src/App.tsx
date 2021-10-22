@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import TOC from './components/TOC';
 import ChosenFilmDetails from './components/ChosenFilmDetails';
+import Spinner from 'react-bootstrap/Spinner'
 
 export interface IFilm {
   title: string;
@@ -47,11 +48,7 @@ const App = () =>{
     initFilmsArr(filmsData);
   }, [filmsData])
 
-  // useEffect(() => {
-      
-  // },[chosenFilm])
-
-  const handleClick = (event: React.SyntheticEvent<HTMLInputElement>, id: number): void => {
+  const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>, id: number): void => {
     setChosenFilm(filmsArr[id]);
     const liked = localStorage.getItem(`${id}`) === 'true';
     setLiked(liked);
@@ -64,17 +61,31 @@ const App = () =>{
 }
 
   return ( !filmsData.length ?
-            <h1>Loading</h1> :
-            <>
-            <TOC filmsData={filmsData} handleClick={handleClick} />
-            <ChosenFilmDetails 
-              filmsArr={filmsArr} 
-              chosenFilm={chosenFilm}
-              isLiked={isLiked}
-              handleLike={handleLike}
-            />
-            </>
+              <div className="App">
+                <div className="outer">
+                  <Spinner className="inner" variant="warning"  animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </div>
+              </div> 
+              :
+              <div className="App">
+              <TOC 
+                filmsData={filmsData} 
+                handleClick={handleClick} 
+              />
+              <ChosenFilmDetails 
+                filmsArr={filmsArr} 
+                chosenFilm={chosenFilm}
+                isLiked={isLiked}
+                handleLike={handleLike}
+              />
+            </div>
+            
   );
+
+
+
 }
 
 export default App;

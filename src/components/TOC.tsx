@@ -1,27 +1,33 @@
 import React, { ReactElement } from 'react'
 import './TOC.css';
 import { IFilm } from '../App';
-import Input from './Input';
+import MyButton from './MyButton';
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+
 
 interface AppProps {
     filmsData: Array<IFilm>
-    handleClick: (event: React.SyntheticEvent<HTMLInputElement>, id: number) => void;
+    handleClick: (event: React.MouseEvent<HTMLElement, MouseEvent> , id: number) => void;
   }
 
 const TOC = (props: AppProps) => { 
   
     return (
-        <>  
-        <div className="toc">
+
+      <div className="toc">
+        <ButtonGroup vertical>
               {props.filmsData.map((film: { episode_id: number; title: string;})=>
-                                <Input 
-                                  listid={film.episode_id}
-                                  handleClick={props.handleClick} 
-                                  value={film.title}
-                                />             
-                              )}  
-        </div>
-        </>
+                                <div className="mybutton"> 
+                                  <MyButton  
+                                    listid={film.episode_id}
+                                    handleClick={props.handleClick} 
+                                    value={film.title}
+                                  /> 
+                                </div>      
+                              )}        
+        </ButtonGroup>
+    </div>
+
     )
 }
 

@@ -1,4 +1,11 @@
 .toc{
-    background-color: brown;
-    border: solid black 2px;
+    text-align: center;
+    width: 20vw;
+    height: 100vh;
+    padding-top: 5vh;
+
+}
+
+.mybutton{
+    padding-bottom: 5vh;
 }

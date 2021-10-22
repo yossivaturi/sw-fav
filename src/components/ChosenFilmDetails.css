@@ -1,4 +1,24 @@
 .chosen{
-    border: solid red 2px;
-    background-color: blueviolet;
+    width: 75vw;
+    height: 100vh;
+    text-align: center;
+    margin-left: 5vw;
+    padding-top: 10vh;
+
 }
+
+p{
+    padding-left: 10vw;
+    padding-right: 10vw;
+    font-family: 'Gelasio', serif;
+    font-family: 'Khand', sans-serif;
+    font-size: large;
+}
+
+h1{
+    padding-left: 2vw;
+    padding-right: 2vw;
+    font-family: 'Alfa Slab One', cursive;
+}
+
+
